@@ -2,25 +2,21 @@ console.log(data)
 // let basket=[]
 function App() {
     const [basket,setBasket]=React.useState([])
-    
-    // const buttons=[]
-    // for(let i=0;i<data.length;i++){
-    //     buttons.push(
-    //         <button className="product">
-    //           <div>{data[i].title}</div>
-    //           <div>{data[i].price}</div>
-    //         </button>
-    //     )
-    // }
-
-    let count=0
-basket.map((item)=>count+=item.price)
-console.log(count);
+    const addToBasket = (item) => {
+        const newBasket = [...basket, item]
+        setBasket(newBasket)
+      }
+   const removeFromBasket=(product)=>{
+    const newBasket=basket.filter((item)=>{
+        item.id!==product.id
+        setBasket(newBasket)
+    })
+   }
   return (
     <div className="App">
       <div className="product-list">
      {data.map((item)=>(
-        <button className="product" key={item.id} onClick={()=>setBasket([...basket,item])}>
+        <button className="product" key={item.id} onClick={()=>addToBasket(item)}>
         <div>{item.title}</div>
         <div>{item.price}</div>
       </button>
@@ -29,13 +25,13 @@ console.log(count);
       <div className="basket">
         <div className="total">
           <span>Итого:</span>
-          <span>{`${count} сом`}</span>
+          <span>0 c</span>
         </div>
         <div>
-          {basket.map((item,i)=>(
-          <button className="product" key={item.id} onClick={()=>setBasket(basket.splice(item,1))}>
-            <div>{item.title}</div>
-            <div>{`${item.price} c`}</div>
+          {basket.map((product,index)=>(
+          <button className="product" key={index} onClick={()=> removeFromBasket(product)}>
+            <div>{product.title}</div>
+            <div>{product.price} сом</div>
           </button>))}
         </div>
       </div>
